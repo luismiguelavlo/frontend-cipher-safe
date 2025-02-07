@@ -2,7 +2,7 @@ import styles from "./LoginPage.module.css";
 
 import { Button } from "../../../ui";
 import { AuthLayout } from "../AuthLayout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,12 +21,13 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
+  const navigate = useNavigate();
 
   const { startLogin } = useAuthStore();
 
   const onSubmit = (data: LoginFormData) => {
     startLogin(data)
-      .then((res) => console.log(res))
+      .then(() => navigate("/dashboard/security-box"))
       .catch((err) => console.log(err));
   };
 
